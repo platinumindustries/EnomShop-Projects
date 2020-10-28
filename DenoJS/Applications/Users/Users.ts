@@ -13,23 +13,11 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
+            let body = context.request.body(),
+                email = (await body.value).get("e-mail")
 
-
-
-
-        try {
-            let body = await context.request.body();
-
-            //let bodyValue = await body.value;
-            let name = body.value.get("name");
-
-            console.log(name)
-
-            context.response.body = "register";
-
-        } catch (error) {
-            console.log(error.message);
-        }
+            //create an account with the email adress and force user to activate via email
+            context.response.body = name
     }
 
     signIn(){
