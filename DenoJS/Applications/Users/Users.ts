@@ -5,10 +5,6 @@ export default class Users{
 
     private readonly db_user: string = 'users'
 
-    private readonly validateEmail: Function = (email: string): boolean  => {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; return re.test(email.toLowerCase())
-    }
-
     constructor(context: any, next: Function, router: Router) {
         router.get("/Users/Register", (context, next) => { this.signUp(context, next) }) 
 
@@ -17,8 +13,8 @@ export default class Users{
     }
 
     signUp(context: any, next: any): void{
-        let mail: string = 
-
+        //let mail: string = 
+        console.log(context.params)
         context.response.body = "register";
     }
 
