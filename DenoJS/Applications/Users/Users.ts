@@ -5,16 +5,20 @@ export default class Users{
 
     private readonly db_user: string = 'users'
 
-    constructor(context: any, next: Function, router: Router) {
+    constructor(context: Record<string, any>, next: Function, router: Router) {
         router.post("/Users/Register", (context, next) => { this.signUp(context, next) }) 
 
 
        context.response.body = "Hello world Users!";
     }
 
-    signUp(context: any, next: any): void{
+    async signUp(context: Record<string, any>, next: Function): Promise<void>{
+        let body = await context.request.body();
+
         
-        console.log(context.params)
+
+
+        console.log(body)
         context.response.body = "register";
     }
 
