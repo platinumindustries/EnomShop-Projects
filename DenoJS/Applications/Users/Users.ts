@@ -13,8 +13,17 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
+
+
+
+
         try {
-           
+            let body = await context.request.body();
+
+            //let bodyValue = await body.value;
+            let name = body.value.get("name");
+
+            console.log(name)
 
             context.response.body = "register";
 
