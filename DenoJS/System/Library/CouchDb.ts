@@ -7,7 +7,7 @@ export default class CouchDb{
     constructor() {
     }
 
-    public static async fetch(url: string, method: string): Promise<any>{ console.log('llll')
-            return fetch(`http://${CouchDb.domain}:${CouchDb.port}/${url}`, {method: method.toUpperCase(), headers: { 'Authorization': 'Basic ' + btoa(CouchDb.username + ":" + CouchDb.password) }})
+    public static async fetch(url: string, method: string = 'get', headers: object = {}): Promise<any>{
+        return fetch(`http://${CouchDb.domain}:${CouchDb.port}/${url}`, {method: method.toUpperCase(), headers: Object.assign({}, headers, { 'Authorization': 'Basic ' + btoa(CouchDb.username + ":" + CouchDb.password) })})
     }
 }
