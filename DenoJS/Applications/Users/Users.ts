@@ -16,6 +16,8 @@ export default class Users{
             let body = context.request.body(),
                 email = (await body.value).get("e-mail")
 
+            fetch(url, {method: 'GET'})
+
             //create an account with the email adress and force user to activate via email
             context.response.body = name
     }
