@@ -1,5 +1,5 @@
 import { Router } from "https://deno.land/x/oak/mod.ts"
-import { CouchDb } from "../../System/Library/CouchDb.ts"
+import CouchDb from "../../System/Library/CouchDb.ts"
 
 export default class Users{
     constructor(context: Record<string, any>, next: Function, router: Router) {
@@ -14,12 +14,12 @@ export default class Users{
 
             
 
-            //let x = await CouchDb.fetch('_users', 'post')
+            let xxx = await CouchDb.fetch('_users', 'post')
 
-            console.log(CouchDb)
+            console.log(xxx)
 
             //create an account with the email adress and force user to activate via email
-            context.response.body = 'name'
+            context.response.body = 'names'
     }
 
     signIn(){
