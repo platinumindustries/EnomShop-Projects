@@ -11,10 +11,11 @@ export default class Users{
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
             let body = context.request.body(),
                 email = (await body.value).get("e-mail")
+                password = (await body.value).get("password")
 
             
 
-            let xxx = await CouchDb.fetch('_users', 'post')
+            let xxx = await CouchDb.fetch(`/_users/org.couchdb.user:${email}`, method: 'put')
 
             console.log(xxx)
 
