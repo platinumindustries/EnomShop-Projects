@@ -9,17 +9,21 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
-            let body = context.request.body(),
-                email = (await body.value).get("e-mail"),
-                password = (await body.value).get("password")
+        if(!context.request.hasBody){
+            throw new Error("Body not found");
+        }
+        try {
+            const result = context.request.body();
+            const body = result.value;
+            console.log(await body);
 
 
-            let xxx = await CouchDb.fetch(`/_users/org.couchdb.user:${email}`, 'put')
- 
-            console.log(body)
-
-            //create an account with the email adress and force user to activate via email
-            context.response.body = 'names'
+            
+            context.response.body = `ll`
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
     signIn(){
