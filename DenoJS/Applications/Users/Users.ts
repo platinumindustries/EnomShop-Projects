@@ -9,12 +9,10 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
-        let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields
+        let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields,
+            res  = await CouchDb.fetch('/_utils/#login', 'post')
 
-        console.log(formData.fields);
-
-
-            
+            console.log(res)
             context.response.body = `ll`        
     }
 
