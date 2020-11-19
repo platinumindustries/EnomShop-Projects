@@ -9,11 +9,16 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
-        let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields,
-            res  = await CouchDb.fetch('/_utils/#login', 'post')
-
+        try{
+            let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields
+            let res  = await CouchDb.fetch('/_utils/#login', { body: JSON.stringify(data), method: 'GET' })
+        
             console.log(res)
-            context.response.body = `ll`        
+            context.response.body = `ll`   
+        } catch(e){
+            console.log(e)
+        }
+             
     }
 
     signIn(){
