@@ -9,21 +9,13 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
-        if(!context.request.hasBody){
-            throw new Error("Body not found");
-        }
-        try {
-            const result = context.request.body();
-            const body = result.value;
-            console.log(await body);
+        let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields
+
+        console.log(formData.fields);
 
 
             
-            context.response.body = `ll`
-        } catch (error) {
-            console.log(error)
-        }
-        
+            context.response.body = `ll`        
     }
 
     signIn(){
