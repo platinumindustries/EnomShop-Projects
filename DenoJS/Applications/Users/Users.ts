@@ -11,15 +11,12 @@ export default class Users{
         try{
             let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields
 
+            let res = await fetch('http://localhost:8091/settings/rbac/users/local/sdavis', { headers: Object.assign({}, headers, { 'Authorization': 'Basic ' + btoa('Administrator' + ":" + 'Macho2012') }), body: JSON.stringify(data), method: 'PUT'})
 
 
 
-
-            /*
-                return fetch(`http://${CouchBaseDb.domain}:${CouchDb.port}/${url}`, { headers: Object.assign({}, headers, { 'Authorization': 'Basic ' + btoa(CouchDb.username + ":" + CouchDb.password) }), ...args})
-                        let res  = await CouchBaseDb.fetch('/_utils/#login', { body: JSON.stringify(data), method: 'GET' })
-        */
-            console.log(data)
+            
+            console.log(res)
             context.response.body = 'll'
         } catch(e){
             console.log(e)
