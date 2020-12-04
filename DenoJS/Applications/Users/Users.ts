@@ -20,7 +20,7 @@ export default class Users{
                         let res  = await CouchBaseDb.fetch('/_utils/#login', { body: JSON.stringify(data), method: 'GET' })
         */
             console.log(data)
-            context.response.body = JSON.stringify(data)
+            context.response.body = 'll'
         } catch(e){
             console.log(e)
         }
