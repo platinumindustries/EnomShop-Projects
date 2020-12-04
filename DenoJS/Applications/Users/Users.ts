@@ -1,5 +1,5 @@
 import { Router } from "https://deno.land/x/oak/mod.ts"
-import CouchDb from "../../System/Library/CouchDb.ts"
+import CouchBaseDb from "../../System/Library/CouchBaseDb.ts"
 
 export default class Users{
     constructor(context: Record<string, any>, next: Function, router: Router) {
