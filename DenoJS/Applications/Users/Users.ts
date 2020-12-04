@@ -13,7 +13,6 @@ export default class Users{
             
             delete data.mail
             data.role = 'basic'
-            
             let res = await fetch('http://localhost:8091/settings/rbac/users/local/' + mail, { 
                 headers: { 
                     'Authorization': 'Basic ' + btoa('Administrator' + ":" + 'Macho2012'),
@@ -26,7 +25,7 @@ export default class Users{
 
 
 
-            console.log(data, mail, res)
+            console.log(JSON.stringify(data) res)
             
             context.response.body = 'll'
         } catch(e){
