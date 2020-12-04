@@ -11,7 +11,16 @@ export default class Users{
         try{
             let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields
 
-            let res = await fetch('http://localhost:8091/settings/rbac/users/local/sdavis', { headers: Object.assign({}, headers, { 'Authorization': 'Basic ' + btoa('Administrator' + ":" + 'Macho2012') }), body: JSON.stringify(data), method: 'PUT'})
+            let res = await fetch('http://localhost:8091/settings/rbac/users/local/sdavis', { 
+                headers: { 
+                    'Authorization': 'Basic ' + btoa('Administrator' + ":" + 'Macho2012'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Origin': '',
+                }, 
+                body: JSON.stringify(data), 
+                method: 'PUT'
+            })
 
 
 
