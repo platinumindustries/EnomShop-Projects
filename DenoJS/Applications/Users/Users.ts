@@ -16,7 +16,6 @@ export default class Users{
             let res = await fetch('http://localhost:8091/settings/rbac/users/local/' + mail, { 
                 headers: { 
                     'Authorization': 'Basic ' + btoa('Administrator' + ":" + 'Macho2012'),
-                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }, 
                 body: JSON.stringify(data), 
@@ -25,7 +24,7 @@ export default class Users{
 
 
 
-            console.log(JSON.stringify(data) res)
+            console.log(JSON.stringify(data), res)
             
             context.response.body = 'll'
         } catch(e){
