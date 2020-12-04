@@ -18,9 +18,11 @@ export default class Users{
                 delete data.mail
                 data.roles = 'basic'
 
-            let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })    
-            console.log(res)
-            context.response.body = JSON.stringify(res)
+            let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })  
+            
+            let x = await res.json()
+            console.log(res, x)
+            context.response.body = '200 - ok'
         } catch(e){
             console.log(e)
         }
