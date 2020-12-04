@@ -8,6 +8,6 @@ export default class CouchBaseDb{
     }
 
     public static async fetch(url: string, args: object = {}, headers: object = {}): Promise<any>{
-        return fetch(`http://${CouchDb.domain}:${CouchDb.port}/${url}`, { headers: Object.assign({}, headers, { 'Authorization': 'Basic ' + btoa(CouchDb.username + ":" + CouchDb.password) }), ...args})
+        return fetch(`http://${CouchBaseDb.domain}:${CouchDb.port}/${url}`, { headers: Object.assign({}, headers, { 'Authorization': 'Basic ' + btoa(CouchDb.username + ":" + CouchDb.password) }), ...args})
     }
 }
