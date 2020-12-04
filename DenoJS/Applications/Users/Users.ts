@@ -20,9 +20,13 @@ export default class Users{
 
             let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })  
             
+            if(res.status === 404){ 
+                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert }, body: new URLSearchParams("password=Macho2012") })
+            }
+
             let x = await res.json()
             console.log(res, x)
-            context.response.body = '200 - ok'
+            context.response.body = x
         } catch(e){
             console.log(e)
         }
