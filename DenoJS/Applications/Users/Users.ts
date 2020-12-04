@@ -1,8 +1,8 @@
 import { Router } from "https://deno.land/x/oak/mod.ts"
 
 export default class Users{
-    private static readonly Cert: string = btoa('Administrator' + ":" + 'Macho2012')
-
+    private static readOnly Cert: string = btoa('Administrator' + ":" + 'Macho2012')
+    
     constructor(context: Record<string, any>, next: Function, router: Router) {
         router.post("/Users/Register", async (context, next) => { await this.signUp(context, next) }) 
 
@@ -14,31 +14,20 @@ export default class Users{
             let body = await context.request.body({ type: 'form-data'}), formData = await body.value.read(), data = formData.fields, mail = data.mail
             
             delete data.mail
-            data.role = 'basic'
+            data.roles = 'basic'
 
             let res = await fetch('http://localhost:8091/settings/rbac/users/local/' + mail, { 
                 headers: { 
-                    'Authorization': 'Basic ' + Users.Cert,
+                    'Authorization': 'Basic ' + ,
                     'Content-Type': 'application/json'
-                },
-                method: 'GET'
+                }, 
+                body: JSON.stringify(data), 
+                method: 'PUT'
             })
 
-            if(res.status === 404){
-                res = await fetch('http://localhost:8091/settings/rbac/users/local/' + mail, { 
-                    headers: { 
-                        'Authorization': 'Basic ' + Users.Cert,
-                        'Content-Type': 'application/json',
-                        'cache': 'no-cache'
-                    }, 
-                    body: JSON.stringify(data), 
-                    method: 'PUT'
-                })
-            }
-            
 
 
-            console.log(res)
+            console.log(JSON.stringify(data), res)
             
             context.response.body = 'll'
         } catch(e){
