@@ -13,17 +13,17 @@ export default class Users{
             let body = await context.request.body({ type: 'form-data'}), 
                 formData = await body.value.read(), 
                 data = formData.fields, 
-                url = 'http://localhost:8091/settings/rbac/users/local/' + data.mail
+                url = 'http://localhost:801/settings/rbac/users/local/' + data.mail
             
                 delete data.mail
                 data.roles = 'basic'
 
             let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })   
-                if (!res.ok) {
-                    res._ = `Network Error: Either there is no (1)Internet connection, (2)The host hasn't been found or (3)The server is not responding`; throw res
+                if (!res.ok) { //USERS#3000 - Network Error: Either there is no (1)Internet connection, (2)The host hasn't been found or (3)The server is not responding
+                     throw Object.assign({ '_code': 'USERS#3000' }, res)
                 }
                 res = await res.json()
-            
+                console.log(res.status)
             context.response.body = 'll'
         } catch(e){
             console.log(e)
