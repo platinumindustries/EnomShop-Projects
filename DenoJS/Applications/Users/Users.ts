@@ -19,13 +19,13 @@ export default class Users{
                 data.roles = 'basic'
 
             let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })  
-            
+            let y = new URLSearchParams(data).toString()
             if(res.status === 404){ 
-                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert }, body: new URLSearchParams("password=Macho2012") })
+                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, }, body: y })
             }
 
             let x = await res.json()
-            console.log(res, x)
+            console.log(data, res, x, y)
             context.response.body = x
         } catch(e){
             console.log(e)
