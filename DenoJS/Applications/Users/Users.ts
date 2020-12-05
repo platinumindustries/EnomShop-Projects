@@ -21,23 +21,9 @@ export default class Users{
                 if (res.status === 200) { //USERS#3000 - username already exists
                      throw Object.assign({ '_code': 'USERS#3000' }, res)
                 }
-
-                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, mode: "cors", body: JSON.stringify(data) })
+                
+                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(data).toString() })
                 console.log(res, await res.json())
-
-
-
-
-
-
-/*
-                const _formData = new FormData();
-                Object.keys(data).forEach(key => _formData.append(key, data[key]));
-
-
-                res = await fetch('https://postman-echo.com/put', { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert }, body: _formData })
-                console.log(res, await res.json())*/
-
 
             context.response.body = 'll'
         } catch(e){
