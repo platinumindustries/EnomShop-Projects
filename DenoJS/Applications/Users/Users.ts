@@ -18,15 +18,9 @@ export default class Users{
                 delete data.mail
                 data.roles = 'basic'
 
-            let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })  
-            let y = new URLSearchParams(data).toString()
-            if(res.status === 404){ 
-                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, }, body: y })
-            }
-
-            let x = await res.json()
-            console.log(data, res, x, y)
-            context.response.body = x
+            
+            
+            context.response.body = 'll'
         } catch(e){
             console.log(e)
         }
