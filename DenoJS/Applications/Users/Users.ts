@@ -18,7 +18,11 @@ export default class Users{
                 delete data.mail
                 data.roles = 'basic'
 
-            
+            let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })   
+                if (!res.ok) {
+                    res._ = `Network Error: Either there is no (1)Internet connection, (2)The host hasn't been found or (3)The server is not responding`; throw res
+                }
+                res = await res.json()
             
             context.response.body = 'll'
         } catch(e){
