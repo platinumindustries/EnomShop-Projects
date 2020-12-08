@@ -27,7 +27,8 @@ export default class Users{
 
             context.response.body = 'll'
         } catch(e){
-            console.log(e)
+            //console.log(e)
+            if(e._code){ console.log('damn')}
         }
              
     }
