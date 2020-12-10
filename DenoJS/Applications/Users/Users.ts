@@ -18,14 +18,14 @@ export default class Users{
                 delete data.mail
 
             let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })   
-                if (res.status === 200) {
-                     context.response.status = 409
-                     context.response.body = { 'code': 'USERS#3000', 'msg': 'user already exists!' }; return;
-                }
+                if (res.status === 200){ context.response.status = 409; context.response.body = { 'msg': 'user already exists!' }; return; }
+                if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
                 
                 res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(data).toString() })
+                    if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
+                    if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': 'missing / unsupported data | marlformed / unknown role' }; return; }
+                    if (res.status === 200){ context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; }
                 
-                console.log(res, await res.json())
 
             context.response.body = 'll'
         } catch(e){
