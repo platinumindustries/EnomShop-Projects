@@ -28,7 +28,8 @@ export default class Users{
             context.response.body = 'll'
         } catch(e){
             //console.log(e)
-            if(e._code){ console.log('damn')}
+            if(!e._code){ console.log('damn')}
+            if(e.code === 'USERS#3000') context.throw(409)
         }
              
     }
