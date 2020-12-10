@@ -25,13 +25,10 @@ export default class Users{
                     if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
                     if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': 'missing / unsupported data | marlformed / unknown role' }; return; }
                     if (res.status === 200){ context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; }
-                
-
-            context.response.body = 'll'
+                    
+                context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
             console.log(e)
-            if(!e._code){ console.log('damn')}
-            if(e.code === 'USERS#3000') context.throw(409)
         }
              
     }
