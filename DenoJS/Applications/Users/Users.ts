@@ -18,16 +18,18 @@ export default class Users{
                 delete data.mail
 
             let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })   
-                if (res.status === 200) { //USERS#3000 - username already exists
-                     throw Object.assign({ '_code': 'USERS#3000' }, res)
+                if (res.status === 200) {
+                     context.response.status = 409
+                     context.response.body = { 'code': 'USERS#3000', 'msg': 'user already exists!' }; return;
                 }
                 
                 res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(data).toString() })
+                
                 console.log(res, await res.json())
 
             context.response.body = 'll'
         } catch(e){
-            //console.log(e)
+            console.log(e)
             if(!e._code){ console.log('damn')}
             if(e.code === 'USERS#3000') context.throw(409)
         }
