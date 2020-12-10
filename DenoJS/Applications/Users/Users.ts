@@ -28,7 +28,7 @@ export default class Users{
                     console.log(res, res.json())
                 context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
-            context.response.status = 500; context.response.body = { 'message': e.message, 'file': e.filename + ' -> ' + e.lineno + ' : ' + e.colno, 'details':JSON.stringify(e.error)}
+            context.response.status = 500; context.response.body = { 'type': e.name, 'message': e.message }
         }       
     }
 
