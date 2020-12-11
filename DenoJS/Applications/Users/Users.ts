@@ -9,11 +9,11 @@ export default class Users{
     }
 
     async signUp(context: Record<string, any>, next: Function): Promise<void>{
-        try{
+        try{ //enforce username password //add default data
             let body = await context.request.body({ type: 'form-data'}), 
                 formData = await body.value.read(), 
                 data = formData.fields, 
-                url = 'http://localhost:8099/settings/rbac/users/local/' + data.mail
+                url = 'http://localhost:8091/settings/rbac/users/local/' + data.mail
             
                 delete data.mail
 
@@ -25,7 +25,7 @@ export default class Users{
                     if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
                     if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': 'missing / unsupported data | marlformed / unknown role' }; return; }
                     if (res.status === 200){ context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; }
-                    console.log(res, res.json())
+                    
                 context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
             context.response.status = 500; context.response.body = { 'type': e.name, 'message': e.message }
@@ -33,7 +33,7 @@ export default class Users{
     }
 
     signIn(){
-
+ 
     }
 
     setup(){
