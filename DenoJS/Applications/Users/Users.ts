@@ -4,11 +4,11 @@ export default class Users{
     private static readonly Cert: string = btoa('Administrator' + ":" + 'Macho2012')
 
     constructor(context: Record<string, any>, next: Function, router: Router) {
-        router.post("/Users/Register", async (context, next) => { await this.signUp(context, next) }) 
+        router.post("/users/create-account", async (context, next) => { await this.createAccount(context, next) }) 
         context.response.body = "Hello world Users!";
     }
 
-    async signUp(context: Record<string, any>, next: Function): Promise<void>{
+    async createAccount(context: Record<string, any>, next: Function): Promise<void>{
         try{ //enforce username password //add default data
             let body = await context.request.body({ type: 'form-data'}), 
                 formData = await body.value.read(), 
@@ -30,6 +30,10 @@ export default class Users{
         } catch(e){
             context.response.status = 500; context.response.body = { 'type': e.name, 'message': e.message }
         }       
+    }
+
+    deleteAccount(){
+ 
     }
 
     signIn(){
