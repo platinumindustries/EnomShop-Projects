@@ -29,7 +29,7 @@ export default class Users{
                     
                 context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
-            context.response.status = 500; context.response.body = { 'type': e.name, 'message': e.message }
+            context.response.status = 500; context.response.body = { 'type': e.name, 'msg': e.message }
         }       
     }
 
@@ -47,7 +47,7 @@ export default class Users{
                     
                 context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
-            context.response.status = 500; context.response.body = { 'type': e.name, 'message': e.message }
+            context.response.status = 500; context.response.body = { 'type': e.name, 'msg': e.message }
         }       
     }
 
