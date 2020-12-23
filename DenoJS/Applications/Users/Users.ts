@@ -60,17 +60,17 @@ export default class Users{
 
     }
 
-    private static async createProfileStore(name, ramQuotaMB = 100){
+    private static async createProfileStore(name: string, ramQuotaMB: number = 100){
         try{ //enforce name - quota
-            let url = Users.BaseUrl + 'pools/default/buckets' 
+            let url = Users.BaseUrl + 'pools/default/buckets'
 
-            let res = await fetch(url, { method: 'POST', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams({ 'name': name, 'ramQuotaMB': ramQuotaMB }).toString() })   
+            let res = await fetch(url, { method: 'POST', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(encodeURI(`?name=${name}&ramQuotaMB=${ramQuotaMB}`)).toString() })   
                 if (res.status === 202){ return { 'status': 202, 'msg': 'request accepted' } }
                 if (res.status === 400){ return { 'status': 400, 'msg': await res.json() } }
                 
-            context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
+            return { 'status': 502, 'msg': 'undocumented response' }
         } catch(e){
-            context.response.status = 500; context.response.body = { 'type': e.name, 'msg': e.message }
+            return { 'status': 500, 'type': e.name, 'msg': e.message }
         } 
     }
 }
