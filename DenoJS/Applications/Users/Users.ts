@@ -60,22 +60,15 @@ export default class Users{
 
     }
 
-    private static async createProfileStore(){
-        try{
+    private static async createProfileStore(name, ramQuotaMB = 100){
+        try{ //enforce name - quota
             let url = Users.BaseUrl + 'pools/default/buckets' 
-            
-                delete data.mail
 
-            let res = await fetch(url, { method: 'GET', headers: { 'Authorization': 'Basic ' + Users.Cert } })   
-                if (res.status === 200){ context.response.status = 409; context.response.body = { 'msg': 'user already exists!' }; return; }
-                if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
+            let res = await fetch(url, { method: 'POST', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams({ 'name': name, 'ramQuotaMB': ramQuotaMB }).toString() })   
+                if (res.status === 202){ return { 'status': 202, 'msg': 'request accepted' } }
+                if (res.status === 400){ return { 'status': 400, 'msg': await res.json() } }
                 
-                res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(data).toString() })
-                    if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
-                    if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': await res.json() }; return; } //simplify this into a simple sentence
-                    if (res.status === 200){ context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; }
-                    
-                context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
+            context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
             context.response.status = 500; context.response.body = { 'type': e.name, 'msg': e.message }
         } 
