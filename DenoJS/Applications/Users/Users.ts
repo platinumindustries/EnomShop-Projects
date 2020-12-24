@@ -26,7 +26,10 @@ export default class Users{
                 res = await fetch(url, { method: 'PUT', headers: { 'Authorization': 'Basic ' + Users.Cert, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(data).toString() })
                     if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
                     if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': await res.json() }; return; } //simplify this into a simple sentence
-                    if (res.status === 200){ context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; }
+                    if (res.status === 200){ 
+                        Users.createProfileStore()
+                        context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; 
+                    }
                     
                 context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
         } catch(e){
@@ -60,7 +63,7 @@ export default class Users{
 
     }
 
-    private static async createProfileStore(name: string, ramQuotaMB: number = 100){
+    private static async createProfileStoreBucket(name: string, ramQuotaMB: number = 100){
         try{ //enforce name - quota
             let url = Users.BaseUrl + 'pools/default/buckets'
 
