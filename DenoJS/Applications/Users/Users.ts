@@ -27,7 +27,7 @@ export default class Users{
                     if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
                     if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': await res.json() }; return; } //simplify this into a simple sentence
                     if (res.status === 200){ 
-                        Users.createProfileStore()
+                        await Users.createProfileStoreBucket()
                         context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; 
                     }
                     
