@@ -15,7 +15,8 @@ export default class Users{
             let body = await context.request.body({ type: 'form-data'}), 
                 formData = await body.value.read(), 
                 data = formData.fields, 
-                url = Users.BaseUrl + 'settings/rbac/users/local/' + data.mail
+                mail = data.mail,
+                url = Users.BaseUrl + 'settings/rbac/users/local/' + mail
             
                 delete data.mail
 
@@ -27,7 +28,7 @@ export default class Users{
                     if (res.status === 401){ context.response.status = 401; context.response.body = { 'msg': 'invalid app certificate ' }; return; }
                     if (res.status === 400){ context.response.status = 400; context.response.body = { 'msg': await res.json() }; return; } //simplify this into a simple sentence
                     if (res.status === 200){ 
-                        await Users.createProfileStoreBucket()
+                        await Users.createProfileStoreBucket(mail)
                         context.response.status = 201; context.response.body = { 'msg': 'user created' }; return; 
                     }
                     
@@ -63,7 +64,7 @@ export default class Users{
 
     }
 
-    private static async createProfileStoreBucket(name: string, ramQuotaMB: number = 100){
+    private static async createProfileStoreBucket(id: string, ...args){ //ramQuotaMB: number = 100,
         try{ //enforce name - quota
             let url = Users.BaseUrl + 'pools/default/buckets'
 
