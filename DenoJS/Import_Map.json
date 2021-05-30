@@ -1,0 +1,7 @@
+{
+    "imports": {
+       "oak": "https://deno.land/x/oak@v7.5.0/mod.ts",
+       "couchbase": "https://dev.jspm.io/couchbase"
+    }
+ }
+ 
