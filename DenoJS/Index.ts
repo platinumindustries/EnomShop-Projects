@@ -2,7 +2,7 @@ import { Application, Router,composeMiddleware  } from "oak"
 import { err } from "err"
 import { setPermissions } from "permission"
 
-class Index{
+class Index{  
     private readonly app = new Application()
     private readonly router = new Router()
     private readonly port:number = parseInt(Deno.args[0], 10)
@@ -11,7 +11,7 @@ class Index{
         this.init()
     }
 
-    private async init(){ 
+    private async init(){
         const controller = new AbortController()
         const { signal } = controller
         
@@ -22,8 +22,9 @@ class Index{
 
             new application.default(context, next, this.router)  
         })
+ 
         this.app.use(this.router.routes(), this.router.allowedMethods())
-        await this.app.listen({ port: this.port, signal })
+        await this.app.listen({ port: this.port, signal }) 
     }
 }
 
