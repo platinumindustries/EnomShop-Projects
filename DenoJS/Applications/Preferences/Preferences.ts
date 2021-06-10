@@ -4,7 +4,7 @@ export default class Preferences{
     constructor(context: Record<string, any>, next: Function, router: Router) {
         router.post("/Preferences/Server/Stop", async (context, next) => { await this.stopServer(context, next) }) 
         router.post("/Preferences/Dummy", async (context, next) => { await this.dummy(context, next) }) 
-        context.response.body = "Hello world Users!";
+        context.response.body = "Hello world Users!"; 
     }
 
     async stopServer(context: Record<string, any>, next: Function): Promise<void>{
@@ -12,8 +12,7 @@ export default class Preferences{
             const controller = context.app.state.controller
             controller.abort();
 
-            context.response.status = 502; context.response.body = { 'msg': 'okay' }; return;        
-                //context.response.status = 502; context.response.body = { 'msg': 'undocumented response' }; return;
+            context.response.status = 200; context.response.body = { 'msg': 'okay' }; return;        
         } catch(e){
             context.response.status = 500; context.response.body = { 'type': e.name, 'msg': e.message }
         }       

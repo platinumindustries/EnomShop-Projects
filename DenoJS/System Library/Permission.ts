@@ -1,34 +1,22 @@
-import { Application, Router } from "https://deno.land/x/oak/mod.ts"
+import { isHttpError, Status } from "oak"
 
-class Index{
-    private readonly app = new Application()
-
-    private readonly router = new Router()
-
-    private readonly application_folder = './Applications'
-
-    private readonly port = 8000
-
+class Permission {
     constructor() {
-        this.init()
+        
     }
 
-    private async init(){ 
-        this.router.get("/:application", async (context, next) => { 
-            try {
-                let application = await import(`${this.application_folder}/${context.params.application}/${context.params.application}.ts`)  //add error handler before this to catch import error
-                
-                new application.default(context, next, this.router)
-            } catch (error) {
-                console.error(error)
-            }
-        })
+    static async setPermissions(context: Record<string, any>, next: Function):Promise<void> {
+        const AppFolderPerm = { name: "read", path: "./Applications/" } as const
+            await Deno.permissions.request(AppFolderPerm)
 
-        this.app.use(this.router.routes())
-        this.app.use(this.router.allowedMethods())
+        const LocalHostNetPerm = { name: "net", host: "127.0.0.1:8000" } as const
+            await Deno.permissions.request(LocalHostNetPerm)
 
-        await this.app.listen({ port: this.port })
+        const DenoNetPerm = { name: "net", host: "deno.land" } as const
+            await Deno.permissions.request(DenoNetPerm)
+
+        await next()
     }
 }
 
-new Index()
+let  setPermissions = Permission.setPermissions; export { setPermissions }

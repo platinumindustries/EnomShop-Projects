@@ -1,4 +1,6 @@
-import { Application, Router, isHttpError, Status  } from "oak"
+import { Application, Router,composeMiddleware  } from "oak"
+import { err } from "err"
+import { setPermissions } from "permission"
 
 class Index{
     private readonly app = new Application()
@@ -9,43 +11,23 @@ class Index{
         this.init()
     }
 
-    private async init(){
-        //run error handling middleware before this
+    private async init(){ 
         const controller = new AbortController()
         const { signal } = controller
         
-        this.router.get("/:application", async (context, next) => {
-            try{
-                let application = await import(`./Applications/${context.params.application}/${context.params.application}.ts`)
-                
-                context.app.state.controller = controller
+        this.router.get("/:application", composeMiddleware([err, setPermissions]), async (context, next) => { 
+            let application = await import(`./Applications/${context.params.application}/${context.params.application}.ts`)
+            
+            context.app.state.controller = controller
 
-                new application.default(context, next, this.router)
-            } catch(e){
-                if (isHttpError(e)) {
-                    switch (e.status) {
-                        case Status.NotFound:
-                            context.response.status = 404; context.response.body = { 'msg': 'we couldn\'t find that page' }
-                            break;
-                         case Status.InternalServerError:
-                            context.response.status = 500; context.response.body = { 'msg': 'whoops! looks like the server made a boo boo!' }
-                            break;    
-                        default:
-                            context.response.status = e.status; context.response.body = { 'msg': e.message }
-                    }
-                    } else {
-                    // rethrow if you can't handle the error
-                    throw e;
-                    }
-            }    
+            new application.default(context, next, this.router)  
         })
         this.app.use(this.router.routes(), this.router.allowedMethods())
         await this.app.listen({ port: this.port, signal })
-        //revoke runtime app permisions?
     }
 }
 
-new Index()
+new Index() 
 
 // deno run --import-map=Import_Map.json Index.ts port[8000] 
 // deno run --import-map=Import_Map.json --allow-net=0.0.0.0:8000 Index.ts 8000
