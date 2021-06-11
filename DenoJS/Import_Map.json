@@ -3,7 +3,8 @@
        "oak": "https://deno.land/x/oak@v7.5.0/mod.ts",
        "couchbase": "https://dev.jspm.io/couchbase",
        "err": "./System Library/Err.ts",
-       "permission": "./System Library/Permission.ts"
+       "permission": "./System Library/Permission.ts",
+       "database": "./System Library/Database.ts"
     }
  }
  

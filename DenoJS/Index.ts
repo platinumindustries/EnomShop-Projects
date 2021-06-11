@@ -29,6 +29,4 @@ class Index{
 }
 
 new Index() 
-
-// deno run --import-map=Import_Map.json Index.ts port[8000] 
 // deno run --import-map=Import_Map.json --allow-net=0.0.0.0:8000 Index.ts 8000

@@ -15,6 +15,9 @@ class Permission {
         const DenoNetPerm = { name: "net", host: "deno.land" } as const
             await Deno.permissions.request(DenoNetPerm)
 
+        const CouchbaseNetPerm = { name: "net", host: "dev.jspm.io/couchbase" } as const
+            await Deno.permissions.request(CouchbaseNetPerm)
+
         await next()
     }
 }
