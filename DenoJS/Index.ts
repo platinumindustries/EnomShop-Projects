@@ -7,11 +7,11 @@ class Index{
     private readonly router = new Router()
     private readonly port:number = parseInt(Deno.args[0], 10)
 
-    constructor() {
+    constructor() { 
         this.init()
     }
 
-    private async init(){
+    private async init(){ 
         const controller = new AbortController()
         const { signal } = controller
         
